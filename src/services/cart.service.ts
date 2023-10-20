@@ -32,6 +32,10 @@ class CartService {
     this._updCounters();
   }
 
+  async setOrderId(){
+    return Date.now()
+  }
+
   async isInCart(product: ProductData) {
     const products = await this.get();
     return products.some(({ id }) => id === product.id);

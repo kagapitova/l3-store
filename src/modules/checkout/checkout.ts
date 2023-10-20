@@ -4,6 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import {EventService} from "../../services/eventService";
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -34,6 +35,24 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
+
+    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    const idArr: number[] = [];
+    this.products.forEach(el => idArr.push(el.id));
+    const orderId = await cartService.setOrderId();
+
+    const eventService = new EventService();
+    eventService.send({
+      type: 'purchase',
+      payload:
+        {
+          orderId: orderId,
+          totalPrice: totalPrice,
+          productIds: idArr
+        } ,
+      timestamp: Date.now()
+    });
+
     window.location.href = '/?isSuccessOrder';
   }
 }
