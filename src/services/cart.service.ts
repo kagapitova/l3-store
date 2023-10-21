@@ -32,7 +32,7 @@ class CartService {
     this._updCounters();
   }
 
-  async setOrderId(){
+  getOrderId(){
     return Date.now()
   }
 

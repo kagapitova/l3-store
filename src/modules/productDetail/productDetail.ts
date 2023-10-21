@@ -4,7 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
-import {EventService} from "../../services/eventService";
+import {EventService} from "../../services/event.service";
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -73,7 +73,7 @@ class ProductDetail extends Component {
     this._setInCart();
 
     const eventService = new EventService();
-    eventService.send({ type: 'addToCard', payload: this.product });
+    eventService.send({ type: 'addToCard', payload: this.product, timestamp: Date.now() });
   }
 
   private _setInCart() {

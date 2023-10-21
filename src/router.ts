@@ -3,7 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
-import {EventService} from "./services/eventService";
+import {EventService} from "./services/event.service";
 
 const ROUTES = {
   '/': homepageComp,
