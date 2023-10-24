@@ -1,15 +1,15 @@
 .search {
 
   display: flex;
+  gap: 2.5px;
   text-align: center;
   font-size: 22px;
   font-weight: 550;
   line-height: 24px;
-  margin: 30px;
-  justify-content: center;
+  padding: 16px 0 20px 125px;
   align-items: center;
 
-  &__container {
+  &__container  {
     background-color: #F6F6FA;
     padding: 4px 6px 8px 6px;
     border-radius: 8px;

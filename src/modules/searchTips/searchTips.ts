@@ -36,11 +36,11 @@ export class SearchTips {
         let html = 'Например, ';
         for(let i = 0; i <= this.links.length -1; i++){
             if(i === this.links.length - 2){
-                html += `<div class="search__container"><a href=${this.links[i].link}>${this.links[i].name}</a></div>или `;
+                html += `<div class="search__container"><a href=${this.links[i].link}>${this.links[i].name}</a></div>  или  `;
             } else if (i === this.links.length - 1){
                 html += `<div class="search__container"><a href=${this.links[i].link}>${this.links[i].name}</a></div>`;
             } else {
-                html += `<div class="search__container"><a href=${this.links[i].link}>${this.links[i].name}</a></div>, `;
+                html += `<div class="search__container"><a href=${this.links[i].link}>${this.links[i].name}</a></div>,`;
             }
         }
 
