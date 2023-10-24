@@ -1,0 +1,25 @@
+.search {
+
+  display: flex;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 550;
+  line-height: 24px;
+  margin: 30px;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    background-color: #F6F6FA;
+    padding: 4px 6px 8px 6px;
+    border-radius: 8px;
+    margin: 0 5px 0 5px;
+  }
+
+  a {
+    height: 36px;
+    background-image: linear-gradient(45deg, #DA15B8, #8D06CC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
