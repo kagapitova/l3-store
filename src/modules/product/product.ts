@@ -10,15 +10,32 @@ export class Product {
   view: View;
   product: ProductData;
   params: ProductComponentParams;
+  wasInView: boolean;
 
   constructor(product: ProductData, params: ProductComponentParams = {}) {
     this.product = product;
     this.params = params;
     this.view = new ViewTemplate(html).cloneView();
+    this.wasInView = false;
   }
 
   attach($root: HTMLElement) {
     $root.appendChild(this.view.root);
+  }
+
+  getWasInView() {
+    return this.wasInView;
+  }
+
+  isInView() {
+    const {top, left, bottom, right} = this.view.root.getBoundingClientRect();
+    const {innerHeight, innerWidth} = window;
+    const result = top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+    if (result) {
+      this.wasInView = true;
+    }
+
+    return result;
   }
 
   render() {

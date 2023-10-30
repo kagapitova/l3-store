@@ -42,21 +42,6 @@ class ProductDetail extends Component {
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
-        if(this.product?.log !== ''){
-          const eventService = new EventService();
-          eventService.send({
-            type: 'viewCardPromo',
-            payload: {...this.product, secretKey},
-            timestamp: Date.now()
-          });
-        } else {
-          const eventService = new EventService();
-          eventService.send({
-            type: 'viewCard',
-            payload: {...this.product, secretKey},
-            timestamp: Date.now()
-          });
-        }
       });
 
     fetch('/api/getPopularProducts')
