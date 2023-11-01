@@ -3,7 +3,7 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
-import {SearchTips, tipsList} from "../searchTips/searchTips";
+import {SearchTips} from "../searchTips/searchTips";
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -14,8 +14,8 @@ class Homepage extends Component {
 
     this.popularProducts = new ProductList();
     this.popularProducts.attach(this.view.popular);
-    this.searchTips = new SearchTips(tipsList);
-    this.searchTips.attach(this.view.searchTips);
+    this.searchTips = new SearchTips();   // удалить после проверки
+    this.searchTips.attach(this.view.searchTips);  // удалить после проверки
   }
 
   render() {

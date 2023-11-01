@@ -58,6 +58,8 @@ export type ProductData = {
     description: string;
 }
 
+
+// удалить Link после проверки
 export type Link = {
     name: string,
     link: string,
