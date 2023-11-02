@@ -4,7 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
-import {EventService} from "../../services/event.service";
+import {eventService, EventTypeValue} from "../../services/event.service";
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -34,24 +34,17 @@ class Checkout extends Component {
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
-    });
-
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    const idArr: number[] = [];
-    this.products.forEach(el => idArr.push(el.id));
-
-    const eventService = new EventService();
-    eventService.send({
-      type: 'purchase',
+    }).then(() => {
+      eventService.send({
+      type: EventTypeValue.purchase,
       payload:
-        {
-          orderId: cartService.getOrderId(),
-          totalPrice: totalPrice,
-          productIds: idArr
-        },
-      timestamp: Date.now()
-    });
-
+          {
+            orderId: cartService.getOrderId(),
+            totalPrice: this.products.reduce((acc, product) => (acc += product.salePriceU), 0),
+            productIds: this.products.map(el => el.id)
+          }
+      })
+    })
     window.location.href = '/?isSuccessOrder';
   }
 }

@@ -3,7 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
-import {EventService} from "./services/event.service";
+import {eventService, EventTypeValue} from "./services/event.service";
 
 const ROUTES = {
   '/': homepageComp,
@@ -26,11 +26,9 @@ export default class Router {
   route(e: any) {
     e.preventDefault();
 
-    const eventService = new EventService();
     eventService.send({
-      type: 'route',
-      payload: {url: window.location.pathname},
-      timestamp: Date.now()
+      type: EventTypeValue.route,
+      payload: {url: window.location.pathname}
     });
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;

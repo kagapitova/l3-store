@@ -3,6 +3,7 @@ import { View } from '../../utils/view';
 import { formatPrice } from '../../utils/helpers'
 import html from './product.tpl.html';
 import { ProductData } from 'types';
+import {eventService, EventTypeValue} from "../../services/event.service";
 
 type ProductComponentParams = { [key: string]: any };
 
@@ -11,32 +12,36 @@ export class Product {
   product: ProductData;
   params: ProductComponentParams;
   wasInView: boolean;
+  observer: IntersectionObserver;
 
   constructor(product: ProductData, params: ProductComponentParams = {}) {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1
+    };
+
     this.product = product;
     this.params = params;
     this.view = new ViewTemplate(html).cloneView();
     this.wasInView = false;
+    this.observer  = new IntersectionObserver(this.handleIntersection, options);
   }
 
   attach($root: HTMLElement) {
     $root.appendChild(this.view.root);
   }
 
-  getWasInView() {
-    return this.wasInView;
-  }
-
-  isInView() {
-    const {top, left, bottom, right} = this.view.root.getBoundingClientRect();
-    const {innerHeight, innerWidth} = window;
-    const result = top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
-    if (result) {
-      this.wasInView = true;
-    }
-
-    return result;
-  }
+  handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        eventService.send({
+          type: this.product.log !== '' ? EventTypeValue.viewCardPromo : EventTypeValue.viewCard,
+          payload: {...this.product}
+        });
+      }
+    });
+  };
 
   render() {
     const { id, name, src, salePriceU } = this.product;
@@ -47,5 +52,6 @@ export class Product {
     this.view.price.innerText = formatPrice(salePriceU);
 
     if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal')
+    this.observer.observe(this.view.root);
   }
 }

@@ -1,23 +1,32 @@
 type EventType = {
-    type: string,
+    type: EventTypeValue,
     payload: object,
-    timestamp: number
 }
 
-export class EventService {
-    apiUrl: string
-    apiMethod: string;
+export enum EventTypeValue {
+    route = 'route',
+    viewCard = 'viewCard',
+    viewCardPromo = 'viewCardPromo',
+    purchase = 'purchase',
+    addToCart = 'addToCart',
+}
 
-    constructor() {
-        this.apiUrl = '/api/sendEvent';
-        this.apiMethod = 'POST';
-    }
+const apiUrl = '/api/sendEvent';
+const apiMethod = 'POST';
+
+class EventService {
     send(event: EventType) {
-        fetch(this.apiUrl, {
-            method: this.apiMethod,
-            body: JSON.stringify(event)
-        })
-            .then(res => res.json())
-            .then(data => console.log(data));
+        try{ fetch(apiUrl, {
+                    method: apiMethod,
+                    body: JSON.stringify({timestamp: Date.now(), ...event} ),
+                },
+            )
+                .then(res => res.json())
+                .then(data => console.log(data));
+        } catch (error) {
+            console.error("Ошибка:", error);
+        }
     }
 }
+
+export const eventService = new EventService();
