@@ -1,15 +1,12 @@
 import {View} from "../../utils/view";
 import {ViewTemplate} from "../../utils/viewTemplate";
 import html from "../searchTips/searchTips.tpl.html";
-import { Link } from 'types';
 
 export class SearchTips {
     view: View;
-    showTips: boolean;
 
     constructor() {
         this.view = new ViewTemplate(html).cloneView();
-        this.showTips = true; // включает/выключает блок подсказок
     }
 
     attach($root: HTMLElement) {
@@ -35,20 +32,13 @@ export class SearchTips {
     }
 
     render() {
-        if (!this.showTips) {
-            return
-        }
-
-        const linkTmpl = (link: Link) => `<div class="search__container"><a href="${link.link}">${link.name}</a></div>`;
-        let linksHtml = 'Например,';
-        this.getData().forEach((el,index) => {
-            let beforeText = '';
-            if (index !== 0) {
-                beforeText = index === this.getData().length - 1 ? ' или ' : ', '
-            }
-            linksHtml += beforeText + linkTmpl(el)
-        })
-        this.view.root.innerHTML = linksHtml;
+        const data = this.getData();
+        this.view.root.innerHTML = data.reduce(
+          (acc,link, index) => {
+              return acc + `${index === 0 ? '' : data.length - 1 ? ' или ' : ', '}<div class="search__container"><a href="${link.link}">${link.name}</a></div>`
+          },
+          'Например,'
+        )
     }
 }
 
