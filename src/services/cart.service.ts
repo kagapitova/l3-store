@@ -32,23 +32,6 @@ class CartService {
     this._updCounters();
   }
 
-  generateRandomId(length: number) {
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let randomId = '';
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      randomId += charset.charAt(randomIndex);
-    }
-    return randomId;
-  }
-
-  async getOrderId() {
-    const id =  await localforage.getItem("__wb-userId");
-    const order = this.generateRandomId(6);
-    console.log(id+order)
-    return id+order
-  }
-
   async isInCart(product: ProductData) {
     const products = await this.get();
     return products.some(({ id }) => id === product.id);

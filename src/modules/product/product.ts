@@ -33,13 +33,11 @@ export class Product {
   }
 
   handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        eventService.send({
-          type: this.product.log !== '' ? EventTypeValue.viewCardPromo : EventTypeValue.viewCard,
-          payload: {...this.product}
-        });
-      }
+    entries.filter(entry => entry.isIntersecting).forEach(() => {
+      eventService.send({
+        type: this.product.log !== '' ? EventTypeValue.viewCardPromo : EventTypeValue.viewCard,
+        payload: this.product
+      });
     });
   };
 

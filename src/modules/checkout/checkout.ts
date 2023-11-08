@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import {formatPrice, genUUID} from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
 import {eventService, EventTypeValue} from "../../services/event.service";
@@ -39,7 +39,7 @@ class Checkout extends Component {
       type: EventTypeValue.purchase,
       payload:
           {
-            orderId: cartService.getOrderId(),
+            orderId: genUUID(),
             totalPrice: this.products.reduce((acc, product) => (acc += product.salePriceU), 0),
             productIds: this.products.map(el => el.id)
           }
