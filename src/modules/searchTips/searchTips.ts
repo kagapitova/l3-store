@@ -35,9 +35,9 @@ export class SearchTips {
         const data = this.getData();
         this.view.root.innerHTML = data.reduce(
           (acc,link, index) => {
-              return acc + `${index === 0 ? '' : data.length - 1 ? ' или ' : ', '}<div class="search__container"><a href="${link.link}">${link.name}</a></div>`
+              return acc + `${index === 0 ? 'Например, ' : data.length - 1 === index ? '  или  ' : ', '}<a href="${link.link}">${link.name}</a>`
           },
-          'Например,'
+          ''
         )
     }
 }
