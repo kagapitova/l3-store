@@ -3,15 +3,19 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+import {SearchTips} from "../searchTips/searchTips";
 
 class Homepage extends Component {
   popularProducts: ProductList;
+  searchTips: SearchTips;
 
   constructor(props: any) {
     super(props);
 
     this.popularProducts = new ProductList();
     this.popularProducts.attach(this.view.popular);
+    this.searchTips = new SearchTips();   // удалить после проверки
+    this.searchTips.attach(this.view.searchTips);  // удалить после проверки
   }
 
   render() {
@@ -29,6 +33,8 @@ class Homepage extends Component {
           'Заказ оформлен. Деньги спишутся с вашей карты, менеджер может позвонить, чтобы уточнить детали доставки'
       });
     }
+
+    this.searchTips.render();
   }
 }
 

@@ -6,6 +6,7 @@ import { ProductList } from '../productList/productList';
 class Catalog extends Component {
   productList: ProductList;
 
+
   constructor(props: any) {
     super(props);
 

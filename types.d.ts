@@ -57,3 +57,10 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+
+// удалить Link после проверки
+export type Link = {
+    name: string,
+    link: string,
+}
