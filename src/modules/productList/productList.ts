@@ -7,9 +7,11 @@ import { Product } from '../product/product';
 export class ProductList {
   view: View;
   products: ProductData[];
+  productComponents: Product[];
 
   constructor() {
     this.products = [];
+    this.productComponents = [];
     this.view = new ViewTemplate(html).cloneView();
   }
 
@@ -28,6 +30,7 @@ export class ProductList {
 
     this.products.forEach((product) => {
       const productComp = new Product(product);
+      this.productComponents.push(productComp);
       productComp.render();
       productComp.attach(this.view.root);
     });
